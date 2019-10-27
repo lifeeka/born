@@ -1,0 +1,10 @@
+Package: born
+Version: 0.0.001
+Architecture: all
+Maintainer: Supun Praneeth<spmsupun@gmail.com>
+Installed-Size: 2
+Depends: python-appindicator
+Section: extras
+Priority: optional
+Homepage: lifeeka.com
+Description: create docker compose

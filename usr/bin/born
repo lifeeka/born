@@ -1,0 +1,36 @@
+#!/usr/bin/python3
+
+from past.builtins import raw_input
+import os, sys
+from colorama import Fore
+from distutils.dir_util import copy_tree
+from subprocess import Popen, PIPE
+
+try:
+    command = sys.argv[1]
+except Exception as e:
+    print(Fore.RED + "Invalid Command!")
+    sys.exit()
+
+cwd = os.getcwd()
+
+if command == 'init':
+    copy_tree("/etc/born", cwd + "/born")
+    env = open(os.getcwd() + "/born/.env", "w")
+    phpVersion = raw_input(Fore.BLUE + "PHP version [7.3]:") or '7.3'
+    mariadbVersion = raw_input("Mariadb version [false]: ") or 'false'
+
+    env.write("PHP_VERSION=" + phpVersion + "\n")
+    env.write("MARIADB_VERSION=" + mariadbVersion + "\n")
+
+    env.close()
+elif command == 'up':
+    command = os.popen('cd born && docker-compose up')
+    print(command.read())
+    print(command.close())
+elif command == 'login':
+    secondCommand = sys.argv[2]
+    command = os.system('cd born && docker-compose exec ' + secondCommand + ' bash')
+
+else:
+    print(Fore.RED + "Invalid Command!")
