@@ -19,6 +19,9 @@ class Creator:
     network = "born"
     directory = "born"
     host_need = {}
+    config = {
+        "domains": []
+    }
     docker_compose = {
         "services": {},
         "version": "3.7",
@@ -33,6 +36,7 @@ class Creator:
         self.project_name = project_name
         os.mkdir('born')
         self.file = self.directory + '/docker-compose.yml'
+        self.config_file = self.directory + '/config.yml'
         self.env = env.Env(self.directory + '/.env')
         self.dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -52,6 +56,10 @@ class Creator:
     def generate_docker_compose(self):
         with open(self.file, 'w') as file:
             yaml.dump(self.docker_compose, file, default_style=None, default_flow_style=False)
+
+    def generate_config(self):
+        with open(self.config_file, 'w') as file:
+            yaml.dump(self.config, file, default_style=None, default_flow_style=False)
 
     def create_mongodb_service(self):
         stack = [
@@ -153,6 +161,9 @@ class Creator:
                     file = open('born/nginx/sites/' + domain_details_answer['domain_name'] + '.conf', 'w')
                     file.write(config_data)
                     file.close()
+
+                    # add to config
+                    self.config['domains'].append(domain_details_answer['domain_name'])
 
     def create_mariadb_service(self):
         stack = [

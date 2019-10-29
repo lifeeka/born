@@ -4,6 +4,7 @@ import datetime
 import os
 import sys
 import shutil
+from subprocess import call
 
 from PyInquirer import prompt
 from pprint import pprint
@@ -12,6 +13,7 @@ from creator import Creator
 from colored import fg, bg, attr
 from python_hosts import Hosts, HostsEntry
 import build
+import status
 
 parser = argparse.ArgumentParser()
 parser.add_argument("task", help="Task", type=str)
@@ -50,10 +52,11 @@ if args.task == 'init':
     init.create_php_service()
     init.create_expressjs_service()
     init.create_nginx_service()
-    #init.create_mariadb_service()
-    #init.create_mongodb_service()
+    # init.create_mariadb_service()
+    # init.create_mongodb_service()
 
     init.generate_docker_compose()
+    init.generate_config()
     stack = [
         {
             'type': 'confirm',
@@ -66,6 +69,20 @@ if args.task == 'init':
         build = build.Build('born')
         build.build(True)
 
+    stack = [
+        {
+            'type': 'confirm',
+            'name': 'start',
+            'message': 'Start the docker compose:',
+        }
+    ]
+    answers = prompt(stack)
+    if answers['start']:
+        command = os.popen('cd born && docker-compose up -d')
+        statusClass = status.Status()
+        statusClass.list()
+
+    os.system('sudo chmod 777 -R born')
 
 elif args.task == 'build':
     if args.sub_task == "force":
@@ -96,12 +113,14 @@ elif args.task == 'restart':
         command = os.popen('cd born && docker-compose restart')
         print(command.read())
     command.close()
+elif args.task == 'status':
+    status = status.Status()
+    status.status()
 elif args.task == 'ls':
 
     if not args.sub_task:
-        command = os.popen('cd born && docker-compose ps')
-        print('%s%s %s %s' % (fg('blue'), attr('bold'), command.read(), attr(0)))
-        command.close()
+        status = status.Status()
+        status.list()
     elif args.sub_task == 'domain':
         domain_list = Hosts()
         for domain in domain_list.entries:
