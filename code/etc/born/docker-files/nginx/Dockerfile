@@ -8,4 +8,6 @@ RUN apk add curl
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-EXPOSE 80
+ARG NGINX_PORT
+
+EXPOSE ${NGINX_PORT}

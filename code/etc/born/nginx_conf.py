@@ -13,8 +13,6 @@ class NginxConf:
 
     def create_server(self, domain='0.0.0.0', location={}):
 
-
-
         server = Section(
             'server',
             Location('/', try_files='$uri /index.php$is_args$args', ),

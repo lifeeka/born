@@ -1,6 +1,7 @@
 class NginxService:
     version = '${NGINX_VERSION}'
     time_zone = '${TZ}'
+    port = '${NGINX_PORT}'
     network = 'born'
     config = {}
 
@@ -16,7 +17,7 @@ class NginxService:
     def create(self):
         self.config = {
             "ports": [
-                "80:80"
+                self.port + ":80"
             ],
             "volumes": [
                 "./logs/nginx/:/var/log/nginx",
@@ -29,6 +30,7 @@ class NginxService:
             "build": {
                 "args": {
                     "NGINX_VERSION": self.version,
+                    "NGINX_PORT": self.port,
                     "TZ": self.time_zone
                 },
                 "context": "nginx"

@@ -1,7 +1,10 @@
 import os
+import random
 import shutil
 
 from nginx.config.api import Location
+
+from manage import Manage
 from service import php_service
 from service import mongodb_service
 from service import nginx_service
@@ -34,11 +37,18 @@ class Creator:
 
     def __init__(self, project_name):
         self.project_name = project_name
-        os.mkdir('born')
+
+        if not os.path.isdir('born'):
+            os.mkdir('born')
+
         self.file = self.directory + '/docker-compose.yml'
         self.config_file = self.directory + '/config.yml'
         self.env = env.Env(self.directory + '/.env')
         self.dir_path = os.path.dirname(os.path.realpath(__file__))
+
+        # set project id
+        self.config['project-id'] = project_name + '-' + str(random.getrandbits(32))
+        self.config['project-name'] = project_name
 
         stack = [
             {
@@ -66,6 +76,7 @@ class Creator:
             {
                 'type': 'confirm',
                 'name': 'install',
+                'default': False,
                 'message': 'Install Mongo:',
             }
         ]
@@ -148,8 +159,12 @@ class Creator:
                             'message': 'Ip Address:',
                         }
                     ]
+                    # get port
+                    random_port = Manage.get_random_port()
+                    self.env.add_value("NGINX_PORT", random_port)
+
                     domain_details_answer = prompt(domain_details)
-                    nginx_config = nginx_conf.NginxConf('born')
+                    nginx_config = nginx_conf.NginxConf(self.project_name)
                     nginx_config.create_domain(domain_details_answer['domain_name'], domain_details_answer['ip'])
 
                     # create nginx conf file
@@ -163,13 +178,14 @@ class Creator:
                     file.close()
 
                     # add to config
-                    self.config['domains'].append(domain_details_answer['domain_name'])
+                    self.config['domains'].append(domain_details_answer['domain_name'] + ":" + str(random_port))
 
     def create_mariadb_service(self):
         stack = [
             {
                 'type': 'confirm',
                 'name': 'install',
+                'default': False,
                 'message': 'Install Mariadb:',
             }
         ]
@@ -245,6 +261,7 @@ class Creator:
             {
                 'type': 'confirm',
                 'name': 'install',
+                'default': False,
                 'message': 'Install ExpressJs:',
             }
         ]
