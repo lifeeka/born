@@ -1,2 +1,3 @@
 #!/bin/bash
+apt install python3.7 python-pip3
 cd /etc/born && pip install -r requirements.txt
