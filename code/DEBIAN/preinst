@@ -1,2 +1,1 @@
 #!/bin/bash
-apt install python-appindicator python3.7 python-pip3 -yy
