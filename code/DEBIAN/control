@@ -7,4 +7,4 @@ Depends: python3.7, python3-pip, docker-ce ,docker-ce-cli
 Section: extras
 Priority: optional
 Homepage: lifeeka.com
-Description: create docker compose
+Description: Dockerize Microservices
