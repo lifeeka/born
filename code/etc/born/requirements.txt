@@ -52,7 +52,7 @@ python_dotenv == 0.10.3
 python_hosts == 0.4.7
 
 # status.py: 4
-requests == 2.18.4
+requests == 2.20.0
 
 # born.py: 9
 serial == 0.0.97
