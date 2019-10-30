@@ -3,7 +3,7 @@ Version: 0.0.001
 Architecture: all
 Maintainer: Supun Praneeth <spmsupun@gmail.com>
 Installed-Size: 2
-Depends: python3.7 python-pip3
+Depends: python3.7, python-pip3
 Section: extras
 Priority: optional
 Homepage: lifeeka.com
