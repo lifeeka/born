@@ -43,7 +43,7 @@ python-dateutil==2.6.1
 python-hosts==0.4.7
 python-libtorrent==1.1.5
 pyxdg==0.25
-PyYAML==3.12
+PyYAML==5.1
 regex==2019.8.19
 requests==2.18.4
 ruamel.yaml==0.15.34
