@@ -16,6 +16,12 @@ from service import mongodb_service
 from service import nginx_service
 from service import php_service
 
+from docker_files.expressjs import docker_text as docker_expressjs
+from docker_files.mariadb import docker_text as docker_mariadb
+from docker_files.mongodb import docker_text as docker_mongodb
+from docker_files.nginx import docker_text as docker_nginx
+from docker_files.php import docker_text as docker_php
+
 
 class Creator:
     network = "born"
@@ -36,9 +42,7 @@ class Creator:
 
     def __init__(self, project_name):
         self.project_name = project_name
-
         self.project = manage.Manage()
-
         os.mkdir(self.directory)
 
         self.file = self.directory + '/docker-compose.yml'
@@ -99,7 +103,10 @@ class Creator:
             mongodb_service_object.create()
 
             # create directory
-            shutil.copytree(self.dir_path + '/docker-files/mongodb', self.directory + '/mongodb')
+            os.mkdir(self.directory + '/mongodb')
+            f = open(self.directory + '/mongodb/Dockerfile', "w+")
+            f.write(docker_mongodb.get_code())
+            f.close()
 
             self.add_service('mongodb', mongodb_service_object.get_config())
 
@@ -130,7 +137,10 @@ class Creator:
             nginx_service_object.create()
 
             # create directory
-            shutil.copytree(self.dir_path + '/docker-files/nginx', self.directory + '/nginx')
+            os.mkdir(self.directory + '/nginx')
+            f = open(self.directory + '/nginx/Dockerfile', "w+")
+            f.write(docker_nginx.get_code())
+            f.close()
 
             self.add_service('nginx', nginx_service_object.get_config())
 
@@ -213,7 +223,10 @@ class Creator:
             mariadb_service_object.create()
 
             # create directory
-            shutil.copytree(self.dir_path + '/docker-files/mariadb', self.directory + '/mariadb')
+            os.mkdir(self.directory + '/mariadb')
+            f = open(self.directory + '/mariadb/Dockerfile', "w+")
+            f.write(docker_mariadb.get_code())
+            f.close()
 
             self.add_service('mariadb', mariadb_service_object.get_config())
 
@@ -245,7 +258,10 @@ class Creator:
             php_service_object.create()
 
             # create directory
-            shutil.copytree(self.dir_path + '/docker-files/php', self.directory + '/php')
+            os.mkdir(self.directory + '/php')
+            f = open(self.directory + '/php/Dockerfile', "w+")
+            f.write(docker_php.get_code())
+            f.close()
 
             self.add_service('php', php_service_object.get_config())
 
@@ -290,7 +306,10 @@ class Creator:
             expressjs_service_object.create()
 
             # create directory
-            shutil.copytree(self.dir_path + '/docker-files/expressjs', self.directory + '/expressjs')
+            os.mkdir(self.directory + '/expressjs')
+            f = open(self.directory + '/expressjs/Dockerfile', "w+")
+            f.write(docker_expressjs.get_code())
+            f.close()
 
             self.add_service('expressjs', expressjs_service_object.get_config())
 

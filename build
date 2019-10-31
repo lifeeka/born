@@ -1,2 +1,2 @@
 #!/bin/bash
-python3.7 -m zipapp code -m "born:main" -o born
+python3.7 -m zipapp code -m "born:main"
