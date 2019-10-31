@@ -11,9 +11,9 @@ class Build:
     def build(self, force=False):
         if force:
             os.system(
-                'cd born  && docker-compose -p ' + self.project.get_project_id() + ' down && docker-compose  -p ' + self.project.get_project_id() + ' build --no-cache')
+                'cd .born  && docker-compose -p ' + self.project.get_project_id() + ' down && docker-compose  -p ' + self.project.get_project_id() + ' build --no-cache')
         else:
-            os.system('cd born && docker-compose build')
+            os.system('cd .born && docker-compose build')
 
     def up(self):
-        os.system('cd born && docker-compose -p ' + self.project.get_project_id() + ' up -d')
+        os.system('cd .born && docker-compose -p ' + self.project.get_project_id() + ' up -d')

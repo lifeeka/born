@@ -9,11 +9,11 @@ from colored import fg, attr
 class Status:
 
     def domain_veryfy(self):
-        os.system('cd born  && docker-compose ps ')
+        os.system('cd .born  && docker-compose ps ')
 
     def status(self):
 
-        with open("born/config.yml", 'r') as stream:
+        with open(".born/config.yml", 'r') as stream:
             config = yaml.safe_load(stream)
             domains = config['domains']
             for domain in domains:

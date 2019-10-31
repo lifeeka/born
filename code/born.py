@@ -118,14 +118,14 @@ def main():
 
             if args.sub_task == "-f":
                 print("Stopping Containers...")
-                command = os.popen('cd born && docker-compose   -p ' + project.get_project_id() + ' down')
+                command = os.popen('cd .born && docker-compose   -p ' + project.get_project_id() + ' down')
                 print(command.read())
 
                 print("Starting Containers")
-                command = os.popen('cd born && docker-compose  -p ' + project.get_project_id() + '  up -d')
+                command = os.popen('cd .born && docker-compose  -p ' + project.get_project_id() + '  up -d')
                 print(command.read())
             else:
-                command = os.popen('cd born && docker-compose  -p ' + project.get_project_id() + '  restart')
+                command = os.popen('cd .born && docker-compose  -p ' + project.get_project_id() + '  restart')
                 print(command.read())
             command.close()
 
@@ -143,20 +143,20 @@ def main():
                     print(domain)
 
         elif args.task == 'log':
-            command = os.popen('cd born && docker-compose logs -f ' + args.sub_task)
+            command = os.popen('cd .born && docker-compose logs -f ' + args.sub_task)
             print(command.read())
             command.close()
 
         elif args.task == 'login':
             command = os.system(
-                'cd born && docker-compose  -p ' + project.get_project_id() + ' exec ' + args.sub_task + ' sh')
+                'cd .born && docker-compose  -p ' + project.get_project_id() + ' exec ' + args.sub_task + ' sh')
 
         elif args.task == '-v':
             print("0.0.001")
             print("0.0.001")
         elif args.task == 'cmd':
             cmd = ' '.join(args.dmp)
-            os.system('cd born && docker-compose -p ' + project.get_project_id() + ' ' + cmd)
+            os.system('cd .born && docker-compose -p ' + project.get_project_id() + ' ' + cmd)
         else:
             print('%s Invalid Command %s' % (fg(1), attr(1)))
 
