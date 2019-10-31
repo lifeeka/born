@@ -161,4 +161,6 @@ def main():
             print('%s Invalid Command %s' % (fg(1), attr(1)))
 
     except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        file_name = os.path.split(exc_tb.tb_frame.f_code.co_filename)[0]
         print("Something wrong! ", str(e) + ":", file_name, exc_tb.tb_lineno)
