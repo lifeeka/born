@@ -19,6 +19,6 @@ class Status:
             for domain in domains:
                 try:
                     requests.get('http://' + domain)
-                    print('%s%s%s %s %s' % ('http://' + domain + "=>", fg('green'), attr('bold'), ' Active', attr(0)))
+                    print('%s%s%s %s %s' % ('http://' + domain, fg('green'), attr('bold'), ' Active', attr(0)))
                 except Exception as e:
-                    print('%s%s%s %s %s' % ('http://' + domain + "=>", fg('red'), attr('bold'), 'Offline', attr(0)))
+                    print('%s%s%s %s %s' % ('http://' + domain, fg('red'), attr('bold'), 'Offline', attr(0)))

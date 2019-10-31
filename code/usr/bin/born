@@ -1,6 +1,0 @@
-#!/bin/bash
-
-DIR="$(cd "$(dirname "$0")" && pwd)"
-search_string="usr/bin"
-replace_string=""
-python3 ${DIR/$search_string/$replace_string}"etc/born/born.py" $@

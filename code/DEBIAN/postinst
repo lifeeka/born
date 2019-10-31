@@ -1,2 +1,0 @@
-#!/bin/bash
-cd /etc/born && pip3 install -r requirements.txt

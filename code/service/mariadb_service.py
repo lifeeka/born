@@ -1,6 +1,7 @@
 class MariadbService:
     version = '${MARIADB_VERSION}'
     time_zone = '${TZ}'
+    port = '${MARIADB_PORT}'
     network = 'born'
     config = {}
 
@@ -23,7 +24,7 @@ class MariadbService:
                 self.network
             ],
             "ports": [
-                "50001:3306"
+                 "" + str(self.port) + ":3306"
             ],
             "volumes": [
                 "./data/mariadb/:/var/lib/mysql"

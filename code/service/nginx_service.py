@@ -17,7 +17,7 @@ class NginxService:
     def create(self):
         self.config = {
             "ports": [
-                self.port + ":80"
+                "" + str(self.port) + ":80"
             ],
             "volumes": [
                 "./logs/nginx/:/var/log/nginx",

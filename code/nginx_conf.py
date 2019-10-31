@@ -11,12 +11,12 @@ class NginxConf:
     def __init__(self, project_name):
         self.project_name = project_name
 
-    def create_server(self, domain='0.0.0.0', location={}):
+    def create_server(self, domain='0.0.0.0', location1={}, location2={}):
 
         server = Section(
             'server',
-            Location('/', try_files='$uri /index.php$is_args$args', ),
-            location,
+            location1,
+            location2,
             access_log='/var/log/nginx/error.log',
             error_log='/var/log/nginx/access.log',
 

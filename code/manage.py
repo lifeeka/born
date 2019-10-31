@@ -1,4 +1,5 @@
 import os
+import shutil
 import socket
 import sys
 
@@ -9,11 +10,17 @@ import status
 
 class Manage:
     config = {}
+    generated_ports = []
 
     def __init__(self):
+        self.cwd = os.path.dirname(os.path.realpath(__file__))
+
         if os.path.isdir("born") and os.path.isfile('born/config.yml'):
             self.project_exist = True
         else:
+            if os.path.isdir("born"):
+                shutil.rmtree('born')
+
             self.project_exist = False
 
     def is_initialized(self):
@@ -51,14 +58,14 @@ class Manage:
         self.load_config()
         os.system('cd born  && docker-compose -p ' + self.get_project_id() + ' ps ')
 
-    @staticmethod
-    def get_random_port():
+    def get_random_port(self):
         ip = socket.gethostbyname("0.0.0.0")
         try:
             for port in range(10000, 50000):
                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 result = sock.connect_ex((ip, port))
-                if result != 0:
+                if result != 0 and port not in self.generated_ports:
+                    self.generated_ports.append(port)
                     return port
                 sock.close()
 

@@ -2,20 +2,19 @@ import os
 import random
 import shutil
 
+import yaml
+from PyInquirer import prompt
 from nginx.config.api import Location
 
+import env
+import manage
+import nginx_conf
 from manage import Manage
-from service import php_service
+from service import expressjs_service
+from service import mariadb_service
 from service import mongodb_service
 from service import nginx_service
-from service import mariadb_service
-from service import expressjs_service
-import env
-import yaml
-from pprint import pprint
-from PyInquirer import prompt, Separator
-import nginx_conf
-from dotenv import load_dotenv
+from service import php_service
 
 
 class Creator:
@@ -38,8 +37,9 @@ class Creator:
     def __init__(self, project_name):
         self.project_name = project_name
 
-        if not os.path.isdir('born'):
-            os.mkdir('born')
+        self.project = manage.Manage()
+
+        os.mkdir('born')
 
         self.file = self.directory + '/docker-compose.yml'
         self.config_file = self.directory + '/config.yml'
@@ -160,7 +160,7 @@ class Creator:
                         }
                     ]
                     # get port
-                    random_port = Manage.get_random_port()
+                    random_port = self.project.get_random_port()
                     self.env.add_value("NGINX_PORT", random_port)
 
                     domain_details_answer = prompt(domain_details)
@@ -168,7 +168,8 @@ class Creator:
                     nginx_config.create_domain(domain_details_answer['domain_name'], domain_details_answer['ip'])
 
                     # create nginx conf file
-                    config_data = nginx_config.create_server(domain_details_answer['domain_name'], self.host_need[key])
+                    config_data = nginx_config.create_server(domain_details_answer['domain_name'],
+                                                             self.host_need[key][0], self.host_need[key][1])
 
                     if not os.path.isdir('born/nginx/sites/'):
                         os.mkdir('born/nginx/sites/')
@@ -202,6 +203,10 @@ class Creator:
                 ]
             }]
             option_answers = prompt(options)
+
+            # port
+            random_port = self.project.get_random_port()
+            self.env.add_value("MARIADB_PORT", random_port)
 
             mariadb_service_object = mariadb_service.MariadbService(self.project_name, self.env)
             mariadb_service_object.set_version(option_answers['version'])
@@ -244,17 +249,18 @@ class Creator:
 
             self.add_service('php', php_service_object.get_config())
 
-            self.host_need['php'] = Location('~ \.php$',
-                                             try_files="$uri / index.php = 404",
-                                             fastcgi_pass="php:9000",
-                                             fastcgi_index="index.php",
-                                             fastcgi_buffers="16 16k",
-                                             fastcgi_buffer_size="32k",
-                                             fastcgi_param="SCRIPT_FILENAME $document_root$fastcgi_script_name",
-                                             fastcgi_read_timeout="600",
-                                             include="fastcgi_params",
+            self.host_need['php'] = [Location('~ \.php$',
+                                              try_files="$uri / index.php = 404",
+                                              fastcgi_pass="php:9000",
+                                              fastcgi_index="index.php",
+                                              fastcgi_buffers="16 16k",
+                                              fastcgi_buffer_size="32k",
+                                              fastcgi_param="SCRIPT_FILENAME $document_root$fastcgi_script_name",
+                                              fastcgi_read_timeout="600",
+                                              include="fastcgi_params",
 
-                                             )
+                                              ),
+                                     Location('/', try_files='$uri /index.php$is_args$args', )]
 
     def create_expressjs_service(self):
         stack = [
@@ -288,7 +294,7 @@ class Creator:
 
             self.add_service('expressjs', expressjs_service_object.get_config())
 
-            self.host_need['expressjs'] = Location('/$',
-                                                   proxy_set_header="X-Forwarded-For $remote_addr",
-                                                   proxy_pass="expressjs:3000",
-                                                   )
+            self.host_need['expressjs'] = [Location('/',
+                                                    proxy_set_header="X-Forwarded-For $remote_addr",
+                                                    proxy_pass="http://expressjs:3000",
+                                                    ), Location('/src')]

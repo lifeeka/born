@@ -1,3 +1,2 @@
 #!/bin/bash
-dpkg -b code
-mv -f code.deb born.deb
+python3.7 -m zipapp code -m "born:main" -o born
