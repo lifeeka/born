@@ -19,7 +19,7 @@ from service import php_service
 
 class Creator:
     network = "born"
-    directory = "born"
+    directory = ".born"
     host_need = {}
     config = {
         "domains": []
@@ -39,7 +39,7 @@ class Creator:
 
         self.project = manage.Manage()
 
-        os.mkdir('born')
+        os.mkdir(self.directory)
 
         self.file = self.directory + '/docker-compose.yml'
         self.config_file = self.directory + '/config.yml'
@@ -99,7 +99,7 @@ class Creator:
             mongodb_service_object.create()
 
             # create directory
-            shutil.copytree(self.dir_path + '/docker-files/mongodb', 'born/mongodb')
+            shutil.copytree(self.dir_path + '/docker-files/mongodb', self.directory + '/mongodb')
 
             self.add_service('mongodb', mongodb_service_object.get_config())
 
@@ -130,7 +130,7 @@ class Creator:
             nginx_service_object.create()
 
             # create directory
-            shutil.copytree(self.dir_path + '/docker-files/nginx', 'born/nginx')
+            shutil.copytree(self.dir_path + '/docker-files/nginx', self.directory + '/nginx')
 
             self.add_service('nginx', nginx_service_object.get_config())
 
@@ -171,10 +171,10 @@ class Creator:
                     config_data = nginx_config.create_server(domain_details_answer['domain_name'],
                                                              self.host_need[key][0], self.host_need[key][1])
 
-                    if not os.path.isdir('born/nginx/sites/'):
-                        os.mkdir('born/nginx/sites/')
+                    if not os.path.isdir(self.directory + '/nginx/sites/'):
+                        os.mkdir(self.directory + '/nginx/sites/')
 
-                    file = open('born/nginx/sites/' + domain_details_answer['domain_name'] + '.conf', 'w')
+                    file = open(self.directory + '/nginx/sites/' + domain_details_answer['domain_name'] + '.conf', 'w')
                     file.write(config_data)
                     file.close()
 
@@ -213,7 +213,7 @@ class Creator:
             mariadb_service_object.create()
 
             # create directory
-            shutil.copytree(self.dir_path + '/docker-files/mariadb', 'born/mariadb')
+            shutil.copytree(self.dir_path + '/docker-files/mariadb', self.directory + '/mariadb')
 
             self.add_service('mariadb', mariadb_service_object.get_config())
 
@@ -245,7 +245,7 @@ class Creator:
             php_service_object.create()
 
             # create directory
-            shutil.copytree(self.dir_path + '/docker-files/php', 'born/php')
+            shutil.copytree(self.dir_path + '/docker-files/php', self.directory + '/php')
 
             self.add_service('php', php_service_object.get_config())
 
@@ -290,7 +290,7 @@ class Creator:
             expressjs_service_object.create()
 
             # create directory
-            shutil.copytree(self.dir_path + '/docker-files/expressjs', 'born/expressjs')
+            shutil.copytree(self.dir_path + '/docker-files/expressjs', self.directory + '/expressjs')
 
             self.add_service('expressjs', expressjs_service_object.get_config())
 
