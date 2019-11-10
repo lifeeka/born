@@ -1,8 +1,5 @@
-from PyInquirer import prompt
-from colorama import Fore
 from colored import attr, fg
-from nginx.config.api import Config, Section, Location
-from past.builtins import raw_input
+from nginx.config.api import Section
 from python_hosts import HostsEntry, Hosts
 
 

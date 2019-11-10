@@ -29,76 +29,80 @@ def main():
     try:
         if args.task == 'init':
 
-            # check already initialized
-            if project.is_initialized():
-                alreadyCreated = [
+            if args.sub_task == 'station':
+                print(3)
+            else:
+
+                # check already initialized
+                if project.is_initialized():
+                    alreadyCreated = [
+                        {
+                            'type': 'list',
+                            'name': 'action',
+                            'message': 'Born is already been initialized:',
+                            'choices': [
+                                'Close',
+                                'Re Create',
+                                'Backup and Create'
+                            ]
+                        }
+                    ]
+                    alreadyCreatedAnswer = prompt(alreadyCreated)['action']
+
+                    if alreadyCreatedAnswer == 'Close':
+                        sys.exit()
+                    elif alreadyCreatedAnswer == 'Re Create':
+                        project.down()
+                        shutil.rmtree('born')
+                    elif alreadyCreatedAnswer == 'Backup and Create':
+                        ts = datetime.datetime.now().timestamp()
+                        shutil.move('born', 'born-bk-' + str(ts))
+
+                # project name
+                project_name = os.path.basename(os.getcwd())
+                project_name_generate = [
                     {
-                        'type': 'list',
-                        'name': 'action',
-                        'message': 'Born is already been initialized:',
-                        'choices': [
-                            'Close',
-                            'Re Create',
-                            'Backup and Create'
-                        ]
+                        'type': 'input',
+                        'name': 'name',
+                        'default': project_name,
+                        'message': 'Project name:',
                     }
                 ]
-                alreadyCreatedAnswer = prompt(alreadyCreated)['action']
+                project_name = prompt(project_name_generate)['name']
 
-                if alreadyCreatedAnswer == 'Close':
-                    sys.exit()
-                elif alreadyCreatedAnswer == 'Re Create':
-                    project.down()
-                    shutil.rmtree('born')
-                elif alreadyCreatedAnswer == 'Backup and Create':
-                    ts = datetime.datetime.now().timestamp()
-                    shutil.move('born', 'born-bk-' + str(ts))
+                init = Creator(project_name)
+                init.create_php_service()
+                init.create_expressjs_service()
+                init.create_nginx_service()
+                init.create_mariadb_service()
+                init.create_mongodb_service()
 
-            # project name
-            project_name = os.path.basename(os.getcwd())
-            project_name_generate = [
-                {
-                    'type': 'input',
-                    'name': 'name',
-                    'default': project_name,
-                    'message': 'Project name:',
-                }
-            ]
-            project_name = prompt(project_name_generate)['name']
+                init.generate_docker_compose()
+                init.generate_config()
+                stack = [
+                    {
+                        'type': 'confirm',
+                        'name': 'build',
+                        'message': 'Build the docker compose:',
+                    }
+                ]
+                answers = prompt(stack)
+                if answers['build']:
+                    build = build.Build('born')
+                    build.build(True)
 
-            init = Creator(project_name)
-            init.create_php_service()
-            init.create_expressjs_service()
-            init.create_nginx_service()
-            init.create_mariadb_service()
-            init.create_mongodb_service()
-
-            init.generate_docker_compose()
-            init.generate_config()
-            stack = [
-                {
-                    'type': 'confirm',
-                    'name': 'build',
-                    'message': 'Build the docker compose:',
-                }
-            ]
-            answers = prompt(stack)
-            if answers['build']:
-                build = build.Build('born')
-                build.build(True)
-
-            stack = [
-                {
-                    'type': 'confirm',
-                    'name': 'start',
-                    'message': 'Start the docker compose:',
-                }
-            ]
-            answers = prompt(stack)
-            if answers['start']:
-                project.up()
-                status = status.Status()
-                status.status()
+                stack = [
+                    {
+                        'type': 'confirm',
+                        'name': 'start',
+                        'message': 'Start the docker compose:',
+                    }
+                ]
+                answers = prompt(stack)
+                if answers['start']:
+                    project.up()
+                    status = status.Status()
+                    status.status()
 
         elif args.task == 'build':
             if args.sub_task == "force":

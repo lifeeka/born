@@ -1,3 +1,0 @@
-#!/bin/bash
-sh build
-sudo dpkg -i born.deb
