@@ -21,7 +21,7 @@ class Station:
                     attr('bold'), fg('blue'), data['project-id'] + ": ", data['project-name'], attr(0)))
                 # start
                 cmd = 'cd ' + folder_name + '/.born && docker-compose -p ' + data[
-                    'project-id'] + " " + action + " && docker-compose ps"
+                    'project-id'] + " " + action + " && docker-compose -p " + data['project-id'] + " ps"
                 print('Executing: ' + cmd)
                 os.system(cmd)
 
