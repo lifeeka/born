@@ -38,7 +38,7 @@ class Station:
     def connect(self, network_name):
         directories = [d for d in os.listdir(os.getcwd()) if os.path.isdir(d)]
 
-        os.system("docker network create --driver bridge " + network_name + " || true")
+        os.popen("docker network create --driver bridge " + network_name + " || true")
         print("Network Created\n")
 
         for folder_name in directories:
@@ -49,11 +49,9 @@ class Station:
                 output = os.popen(
                     'cd ' + folder_name + '/.born && ' + 'docker-compose -p ' + data['project-id'] + ' ps -q').read()
 
-                print(output)
-
                 print("Connecting: " + data['project-name'])
                 for container_id in output.splitlines():
-                    print("\tContainer : " + container_id + " to " + network_name)
+                    print("Container : " + container_id + " to " + network_name)
                     os.system("docker network connect " + network_name + " " + container_id)
 
                 print("\n")
