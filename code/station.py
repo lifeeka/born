@@ -34,3 +34,13 @@ class Station:
                     print()
 
                 print("\n")
+
+    def connect(self, network_name):
+        directories = [d for d in os.listdir(os.getcwd()) if os.path.isdir(d)]
+
+        for folder_name in directories:
+            config_path = folder_name + '/.born/config.yml'
+
+            if os.path.isfile(config_path):
+                data = yaml.safe_load(open(config_path))
+                os.system("docker network connect " + network_name + " " + data['project-id'])

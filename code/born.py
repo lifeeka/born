@@ -176,11 +176,21 @@ def main():
             elif sub_task == 'status':
                 station_ob = station.Station()
                 station_ob.init('status')
+            elif sub_task == 'connect':
+
+                stack = [
+                    {
+                        'type': 'input',
+                        'name': 'network',
+                        'message': 'Network name:',
+                    }
+                ]
+                answers = prompt(stack)
+                station_ob = station.Station()
+                station_ob.connect(answers['network'])
             else:
                 station_ob = station.Station()
                 station_ob.init(False)
-
-
 
         else:
             print('%s Invalid Command %s' % (fg(1), attr(1)))
