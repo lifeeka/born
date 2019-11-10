@@ -18,9 +18,8 @@ class Station:
                 data = yaml.safe_load(open(config_path))
 
                 # start
-                print(folder_name + '/.born && docker-compose -p ' + data['project-name'] + action)
                 os.system('cd ' + folder_name + '/.born && ls')
-                os.system('cd ' + folder_name + '/.born && docker-compose -p ' + data['project-name'] + action)
+                os.system('cd ' + folder_name + '/.born && docker-compose -p ' + data['project-name'] + " " + action)
 
                 print('%s%s%s %s %s' % (
                     attr('bold'), fg('blue'), data['project-id'] + ": ", data['project-name'], attr(0)))
