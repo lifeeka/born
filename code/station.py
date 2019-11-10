@@ -28,5 +28,9 @@ class Station:
                 cmd += " && docker-compose -p " + data['project-id'] + " ps"
                 os.system(cmd)
 
-                status.Status.check_status(data['domains'][0])
+                try:
+                    status.Status.check_status(data['domains'][0])
+                except Exception as e:
+                    print()
+
                 print("\n")
