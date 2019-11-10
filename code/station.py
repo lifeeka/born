@@ -18,7 +18,7 @@ class Station:
                 data = yaml.safe_load(open(config_path))
 
                 # start
-                os.system('cd ' + folder_name + ' /.born && docker-compose -p ' + data['project-id'] + ' up -d')
+                os.system('cd ' + folder_name + '/.born && docker-compose -p ' + data['project-id'] + ' up -d')
 
                 print("\n")
                 print('%s%s%s %s %s' % (
