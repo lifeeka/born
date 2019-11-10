@@ -176,6 +176,9 @@ def main():
             elif sub_task == 'status':
                 station_ob = station.Station()
                 station_ob.init('status')
+            else:
+                station_ob = station.Station()
+                station_ob.init(False)
 
 
 

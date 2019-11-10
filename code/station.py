@@ -8,7 +8,7 @@ class Station:
     def __init__(self):
         print()
 
-    def init(self, action='start'):
+    def init(self, action=False):
         directories = [d for d in os.listdir(os.getcwd()) if os.path.isdir(d)]
 
         for folder_name in directories:
@@ -20,9 +20,12 @@ class Station:
                 print('%s%s%s %s %s' % (
                     attr('bold'), fg('blue'), data['project-id'] + ": ", data['project-name'], attr(0)))
                 # start
-                cmd = 'cd ' + folder_name + '/.born && docker-compose -p ' + data[
-                    'project-id'] + " " + action + " && docker-compose -p " + data['project-id'] + " ps"
-                print('Executing: ' + cmd)
+                cmd = 'cd ' + folder_name + "/.born"
+
+                if action:
+                    cmd += '&& docker-compose -p ' + data['project-id'] + " " + action
+
+                cmd += " && docker-compose -p " + data['project-id'] + " ps"
                 os.system(cmd)
 
                 status.Status.check_status(data['domains'][0])
