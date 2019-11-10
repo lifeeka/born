@@ -42,8 +42,8 @@ def main():
                         print("\n")
                         print('%s%s%s %s %s' % (
                         attr('bold'), fg('blue'), data['project-id'] + ": ", data['project-name'], attr(0)))
-                        status = status.Status()
-                        status.check_status(data['domains'][0])
+                        status_ob = status.Status()
+                        status_ob.check_status(data['domains'][0])
                         print("\n")
 
 
