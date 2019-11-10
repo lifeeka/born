@@ -16,9 +16,6 @@ class MongodbService:
 
     def create(self):
         self.config = {
-            "networks": [
-                self.network
-            ],
             "ports": [
                 "50001:3306"
             ],

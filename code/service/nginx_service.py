@@ -24,9 +24,6 @@ class NginxService:
                 "./nginx/sites:/etc/nginx/conf.d",
                 "../:/app"
             ],
-            "networks": [
-                self.network
-            ],
             "build": {
                 "args": {
                     "NGINX_VERSION": self.version,

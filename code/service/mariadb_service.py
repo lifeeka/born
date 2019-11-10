@@ -20,9 +20,6 @@ class MariadbService:
             "environment": {
                 "MYSQL_ROOT_PASSWORD": "root"
             },
-            "networks": [
-                self.network
-            ],
             "ports": [
                  "" + str(self.port) + ":3306"
             ],

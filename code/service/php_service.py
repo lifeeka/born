@@ -29,9 +29,6 @@ class PhpService:
             },
             "volumes": [
                 "../:/app:rw"
-            ],
-            "networks": [
-                self.network
             ]
         }
 
