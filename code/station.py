@@ -43,4 +43,8 @@ class Station:
 
             if os.path.isfile(config_path):
                 data = yaml.safe_load(open(config_path))
+                output = os.popen(
+                    'cd ' + folder_name + '/.born && ' + 'docker-compose -p ' + data['project-id'] + ' ps -q').read()
+                print(output)
+
                 os.system("docker network connect " + network_name + " " + data['project-id'])
