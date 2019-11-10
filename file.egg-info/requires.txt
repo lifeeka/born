@@ -1,0 +1,8 @@
+pyyaml
+colored
+python-hosts
+pyinquirer
+request
+requests
+nginx-config-builder
+colorama
