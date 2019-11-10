@@ -1,6 +1,6 @@
-wget https://raw.githubusercontent.com/lifeeka/born/master/requirements.txt &&  pip3 install -r requirements.txt
-wget https://raw.githubusercontent.com/lifeeka/born/master/born
-wget https://raw.githubusercontent.com/lifeeka/born/master/born.pyz
+wget -q https://raw.githubusercontent.com/lifeeka/born/master/requirements.txt &&  pip3 install -r requirements.txt
+wget -q https://raw.githubusercontent.com/lifeeka/born/master/born
+wget -q https://raw.githubusercontent.com/lifeeka/born/master/born.pyz
 
 rm requirements.txt
 rm installation
