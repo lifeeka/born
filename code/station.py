@@ -38,8 +38,8 @@ class Station:
     def connect(self, network_name):
         directories = [d for d in os.listdir(os.getcwd()) if os.path.isdir(d)]
 
-        print("Network Created:")
         os.system("docker network create --driver bridge " + network_name + " || true")
+        print("Network Created\n")
 
         for folder_name in directories:
             config_path = folder_name + '/.born/config.yml'
@@ -55,3 +55,5 @@ class Station:
                 for container_id in output.splitlines():
                     print("\tContainer : " + container_id + " to " + network_name)
                     os.system("docker network connect " + network_name + " " + container_id)
+
+                print("\n")
