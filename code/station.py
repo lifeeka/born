@@ -49,7 +49,9 @@ class Station:
                 output = os.popen(
                     'cd ' + folder_name + '/.born && ' + 'docker-compose -p ' + data['project-id'] + ' ps -q').read()
 
+                print(output)
+
                 print("Connecting: " + data['project-name'])
                 for container_id in output.splitlines():
-                    print("Container : " + container_id + " to " + network_name)
+                    print("\tContainer : " + container_id + " to " + network_name)
                     os.system("docker network connect " + network_name + " " + container_id)
