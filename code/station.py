@@ -19,7 +19,7 @@ class Station:
 
                 # start
                 cmd = 'cd ' + folder_name + '/.born && docker-compose -p ' + data['project-name'] + " " + action
-                print('%s Executing: %s' + cmd % (fg(1), attr(1)))
+                print('Executing: ' + cmd)
                 os.system(cmd)
 
                 print('%s%s%s %s %s' % (
