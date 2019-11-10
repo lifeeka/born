@@ -1,2 +1,4 @@
 wget https://raw.githubusercontent.com/lifeeka/born/master/requirements.txt &&  pip install -r requirements.txt
 rm requirements.txt
+wget https://raw.githubusercontent.com/lifeeka/born/master/born
+wget https://raw.githubusercontent.com/lifeeka/born/master/born.pyz
