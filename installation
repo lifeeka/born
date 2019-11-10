@@ -1,0 +1,2 @@
+wget https://raw.githubusercontent.com/lifeeka/born/master/setup.py && python3 setup.py install
+rm setup.py
