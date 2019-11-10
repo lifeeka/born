@@ -17,8 +17,11 @@ class Status:
             config = yaml.safe_load(stream)
             domains = config['domains']
             for domain in domains:
-                try:
-                    requests.get('http://' + domain)
-                    print('%s%s%s %s %s' % ('http://' + domain, fg('green'), attr('bold'), ' Active', attr(0)))
-                except Exception as e:
-                    print('%s%s%s %s %s' % ('http://' + domain, fg('red'), attr('bold'), 'Offline', attr(0)))
+                self.check_status(domain)
+
+    def check_status(self, domain):
+        try:
+            requests.get('http://' + domain)
+            print('%s%s%s %s %s' % ('http://' + domain, fg('green'), attr('bold'), ' Active', attr(0)))
+        except Exception as e:
+            print('%s%s%s %s %s' % ('http://' + domain, fg('red'), attr('bold'), 'Offline', attr(0)))

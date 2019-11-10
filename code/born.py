@@ -30,7 +30,20 @@ def main():
         if args.task == 'init':
 
             if args.sub_task == 'station':
-                print(3)
+
+                directories = [d for d in os.listdir(os.getcwd()) if os.path.isdir(d)]
+
+                for filename in directories:
+                    config_path = filename + '/config.yml'
+
+                    if os.path.isfile(config_path):
+                        data = yaml.safe_load(open(config_path))
+
+                        print('%s%s%s %s %s' % (attr('bold'), fg('blue'), data['project-id'] + ": ", data['project-name'], attr(0)))
+                        status = status.Status()
+                        status.check_status(data['domains'][0])
+
+
             else:
 
                 # check already initialized
