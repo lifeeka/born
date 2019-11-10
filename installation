@@ -2,8 +2,8 @@ wget -q https://raw.githubusercontent.com/lifeeka/born/master/requirements.txt
 
 pip3 install -r requirements.txt
 
-rm born
-rm born.pyz
+rm -f born
+rm -f born.pyz
 
 wget -q https://raw.githubusercontent.com/lifeeka/born/master/born
 wget -q https://raw.githubusercontent.com/lifeeka/born/master/born.pyz
