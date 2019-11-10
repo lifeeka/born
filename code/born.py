@@ -34,7 +34,7 @@ def main():
                 directories = [d for d in os.listdir(os.getcwd()) if os.path.isdir(d)]
 
                 for filename in directories:
-                    config_path = filename + '/config.yml'
+                    config_path = filename + '.born//config.yml'
 
                     if os.path.isfile(config_path):
                         data = yaml.safe_load(open(config_path))
