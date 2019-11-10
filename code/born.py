@@ -39,9 +39,12 @@ def main():
                     if os.path.isfile(config_path):
                         data = yaml.safe_load(open(config_path))
 
-                        print('%s%s%s %s %s' % (attr('bold'), fg('blue'), data['project-id'] + ": ", data['project-name'], attr(0)))
+                        print("\n")
+                        print('%s%s%s %s %s' % (
+                        attr('bold'), fg('blue'), data['project-id'] + ": ", data['project-name'], attr(0)))
                         status = status.Status()
                         status.check_status(data['domains'][0])
+                        print("\n")
 
 
             else:
