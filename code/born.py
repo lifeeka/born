@@ -44,7 +44,6 @@ def main():
                         attr('bold'), fg('blue'), data['project-id'] + ": ", data['project-name'], attr(0)))
 
                         status.Status.check_status(data['domains'][0])
-                        print("\n")
 
 
             else:
