@@ -144,7 +144,7 @@ def main():
                     print(domain)
 
         elif args.task == 'log':
-            command = os.popen('cd .born && docker-compose logs -f ' + args.sub_task)
+            command = os.popen('cd .born && docker-compose  -p ' + project.get_project_id() + ' logs -f ' + args.sub_task)
             print(command.read())
             command.close()
 
