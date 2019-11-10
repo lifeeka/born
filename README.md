@@ -1,3 +1,4 @@
 ### Installation
 
-`wget https://github.com/lifeeka/born/raw/master/born`
+wget https://raw.githubusercontent.com/lifeeka/born/master/installation && sh installation
+rm installation
