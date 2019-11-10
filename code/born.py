@@ -173,6 +173,9 @@ def main():
             elif sub_task == 'restart':
                 station_ob = station.Station()
                 station_ob.init('restart')
+            elif sub_task == 'status':
+                station_ob = station.Station()
+                station_ob.init('status')
 
 
 
