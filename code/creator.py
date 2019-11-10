@@ -32,12 +32,7 @@ class Creator:
     }
     docker_compose = {
         "services": {},
-        "version": "3.7",
-        "networks": {
-            network: {
-                "driver": "bridge"
-            }
-        }
+        "version": "3.7"
     }
 
     def __init__(self, project_name):
