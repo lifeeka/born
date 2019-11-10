@@ -164,7 +164,15 @@ def main():
             sub_task = args.sub_task
             if sub_task == 'start':
                 station_ob = station.Station()
-                station_ob.start()
+                station_ob.init('up -d')
+
+            elif sub_task == 'down':
+                station_ob = station.Station()
+                station_ob.init('down')
+
+            elif sub_task == 'restart':
+                station_ob = station.Station()
+                station_ob.init('restart')
 
 
 
