@@ -19,7 +19,8 @@ class Status:
             for domain in domains:
                 self.check_status(domain)
 
-    def check_status(self, domain):
+    @staticmethod
+    def check_status(domain):
         try:
             requests.get('http://' + domain)
             print('%s%s%s %s %s' % ('http://' + domain, fg('green'), attr('bold'), ' Active', attr(0)))
