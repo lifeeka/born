@@ -129,6 +129,29 @@ def main():
                 command = os.popen('cd .born && docker-compose  -p ' + project.get_project_id() + '  restart')
                 print(command.read())
             command.close()
+        elif args.task == 'connect':
+
+            stack = [
+                {
+                    'type': 'input',
+                    'name': 'network',
+                    'message': 'Network name:',
+                }
+            ]
+            answers = prompt(stack)
+
+            config_path = os.getcwd() + '/.born/config.yml'
+
+            if os.path.isfile(config_path):
+                data = yaml.safe_load(open(config_path))
+                output = os.popen(
+                    'cd ' + os.getcwd() + '/.born && ' + 'docker-compose -p ' + data['project-id'] + ' ps -q').read()
+
+                print("Connecting: " + data['project-name'])
+                for container_id in output.splitlines():
+                    print("Container : " + container_id + " to " + answers['network'])
+                    os.system("docker network connect " + answers['network'] + " " + container_id)
+
 
         elif args.task == 'status':
             status = status.Status()
