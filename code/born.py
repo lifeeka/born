@@ -167,13 +167,20 @@ def main():
                     print(domain)
 
         elif args.task == 'log':
-            command = os.popen('cd .born && docker-compose  -p ' + project.get_project_id() + ' logs -f ' + args.sub_task)
+            command = os.popen(
+                'cd .born && docker-compose  -p ' + project.get_project_id() + ' logs -f ' + args.sub_task)
             print(command.read())
             command.close()
 
         elif args.task == 'login':
-            command = os.system(
-                'cd .born && docker-compose  -p ' + project.get_project_id() + ' exec ' + args.sub_task + ' sh')
+
+            sub_task = args.sub_task
+            if sub_task:
+                os.system(
+                    'cd .born && docker-compose  -p ' + project.get_project_id() + ' exec ' + args.sub_task + ' ' + sub_task)
+            else:
+                os.system(
+                    'cd .born && docker-compose  -p ' + project.get_project_id() + ' exec ' + args.sub_task + ' sh')
 
         elif args.task == '-v':
             print("0.0.001")
