@@ -22,6 +22,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("task", help="Task", type=str)
     parser.add_argument("sub_task", nargs='?', help="Task", type=str)
+    parser.add_argument("third_task", nargs='?', help="Task", type=str)
     parser.add_argument("-f", "--force", help="force create")
     parser.add_argument('-c', '--dmp', nargs='+')
 
@@ -174,10 +175,10 @@ def main():
 
         elif args.task == 'login':
 
-            sub_task = args.sub_task
-            if sub_task:
+            third_task = args.third_task
+            if third_task:
                 os.system(
-                    'cd .born && docker-compose  -p ' + project.get_project_id() + ' exec ' + args.sub_task + ' ' + sub_task)
+                    'cd .born && docker-compose  -p ' + project.get_project_id() + ' exec ' + args.sub_task + ' ' + third_task)
             else:
                 os.system(
                     'cd .born && docker-compose  -p ' + project.get_project_id() + ' exec ' + args.sub_task + ' sh')
