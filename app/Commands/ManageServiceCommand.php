@@ -21,7 +21,7 @@ class ManageServiceCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'manage {task=status} {params?} {--queue= :mmm}';
+    protected $signature = 'manage {task=status} {params=ps} {sub_params?} {--api?}';
     /**
      * The description of the command.
      *
@@ -42,10 +42,11 @@ class ManageServiceCommand extends Command
         $arguments = $this->arguments();
         $options = $this->options();
         $command = $arguments['task'];
+        
 
         if (isset($mapper->commands[$command])) {
             /** @var ConsoleCommandInterface $commandClass */
-            $commandClass = new $mapper->commands[$command];
+            $commandClass = new $mapper->commands[$command]($this);
             $commandClass->setConfigFolderPath($service->getConfigFolderPath());
             $commandClass->execute();
         } else {

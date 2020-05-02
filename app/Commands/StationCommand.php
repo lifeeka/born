@@ -43,8 +43,7 @@ class StationCommand extends Command
             $commandClass->execute();
         } else {
             $this->warn('Invalid command!');
-        }
-        // dump($arguments,$options);
+        } 
 
     }
 

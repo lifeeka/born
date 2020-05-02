@@ -48,12 +48,15 @@ abstract class BaseStationTask
         $this->map(function ($configFolderPath, $configPath) use ($command) {
             $config = new Config();
             $config->load($configPath);
-
-            $this->command->info($config->getProjectName() . " | " . $config->getProjectId());
-
-            $dockerCommand = "docker-compose -p {$config->getProjectId()} $command";
+            
+            $dockerCommand = "docker-compose -p {$config->getProjectName()} $command";
+            
+            $this->command->info("name: " . $config->getProjectName());
+            $this->command->info("command: ". $dockerCommand);
+            $this->command->info("folder: ". $configFolderPath);
 
             $process = Process::fromShellCommandline($dockerCommand, $configFolderPath);
+            $process->setTimeout(60000000);
             $process->run(function ($type, $buffer) {
                 $this->command->line("<fg=cyan;>$buffer</>");
             });

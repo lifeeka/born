@@ -12,7 +12,7 @@ class Service
 {
     private $projectFolder;
     private $bornFolder = ".born";
-    private $configFilename = "config.yaml";
+    private $configFilename = "config.yml";
     private $projectExist;
     private $serviceName;
     private $containers = [];

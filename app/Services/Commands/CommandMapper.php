@@ -9,6 +9,7 @@ use App\Services\DockerFile\PHPDockerFile;
 class CommandMapper
 {
     public $commands = [
-            'any' => DockerCompose::class,
+            'cm' => DockerComposeCommand::class,
+            'net' => NetworkCommand::class,
     ];
 }

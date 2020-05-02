@@ -5,7 +5,6 @@ namespace App\Commands;
 use App\Services\ContainerRegister;
 use App\Services\Containers\ContainerInterface;
 use App\Services\DockerCompose;
-use App\Services\DockerFile\DockerImageInterface;
 use App\Services\Environment;
 use App\Services\Service;
 use Illuminate\Console\Scheduling\Schedule;
@@ -38,13 +37,15 @@ class CreateServiceCommand extends Command
      *
      * @return mixed
      */
-    public function handle(Service $service,DockerCompose $dockerCompose, ContainerRegister $containerRegister, 
-            Environment 
-$environment)
-    {
+    public function handle(
+            Service $service,
+            DockerCompose $dockerCompose,
+            ContainerRegister $containerRegister,
+            Environment $environment
+    ) {
         $arguments = $this->arguments();
-        $options = $this->options(); 
-        
+        $options = $this->options();
+
         if ($service->isProjectExist() && !$options['force']) {
             $this->warn('Born is already been initialized');
         } else {
@@ -59,7 +60,7 @@ $environment)
             foreach ($selectedService as $serviceKey) {
                 /** @var ContainerInterface $container */
                 $container = new  $containerRegister->container[$serviceKey];
-                $container->generateInput($this); 
+                $container->generateInput($this);
                 $service->addContainer($container);
                 $dockerCompose->addContainer($container);
 

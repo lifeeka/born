@@ -10,8 +10,7 @@ use Symfony\Component\Yaml\Yaml;
 class Config
 {
     private $domains = [];
-    private $projectName = "";
-    private $projectId = "";
+    private $projectName = ""; 
     private $configFolderPath;
     private $configFilename;
 
@@ -63,24 +62,11 @@ class Config
 
         return $this;
     }
-
-    /**
-     * @param  string  $projectId
-     *
-     * @return Config
-     */
-    public function setProjectId(string $projectId): Config
-    {
-        $this->projectId = $projectId;
-
-        return $this;
-    }
-
+ 
     public function load($path)
     {
-        $data = Yaml::parseFile($path);
-        $this->domains = $data['domains'] ?? [];
-        $this->projectId = $data['project-id'] ?? '';
+        $data = Yaml::parseFile($path); 
+        $this->domains = $data['domains'] ?? []; 
         $this->projectName = $data['project-name'] ?? '';
     }
 
@@ -107,13 +93,5 @@ class Config
     {
         return $this->projectName;
     }
-
-    /**
-     * @return string
-     */
-    public function getProjectId(): string
-    {
-        return $this->projectId;
-    }
-    
+ 
 }
