@@ -7,7 +7,10 @@ use App\Services\DockerCompose;
 use App\Services\Environment;
 use App\Services\Service;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\File;
 use LaravelZero\Framework\Commands\Command;
+
+use Illuminate\Support\Facades\Storage;
 
 class BornCommand extends Command
 {
@@ -40,8 +43,10 @@ class BornCommand extends Command
     {
         $arguments = $this->arguments();
         $options = $this->options();
+
+        return Storage::download("https://github.com/lifeeka/born/blob/master/born");
         
-        dd($options,$arguments);
+        #dd($options,$arguments);
     }
 
     /**
