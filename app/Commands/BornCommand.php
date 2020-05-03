@@ -2,15 +2,11 @@
 
 namespace App\Commands;
 
-use App\Services\ContainerRegister;
-use App\Services\DockerCompose;
-use App\Services\Environment;
-use App\Services\Service;
+use App\Services\Self\BornService;
+use App\Services\Self\TaskInterface;
+use App\Services\Self\TaskMapper;
 use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Support\Facades\File;
 use LaravelZero\Framework\Commands\Command;
-
-use Illuminate\Support\Facades\Storage;
 
 class BornCommand extends Command
 {
@@ -30,22 +26,31 @@ class BornCommand extends Command
     /**
      * Execute the console command.
      *
-     * @param  Service  $service
-     *
-     * @param  DockerCompose  $dockerCompose
-     * @param  ContainerRegister  $containerRegister
-     *
-     * @param  Environment  $environment
+     * @param  TaskMapper  $mapper
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(TaskMapper $mapper)
     {
         $arguments = $this->arguments();
         $options = $this->options();
 
-        return Storage::download("https://github.com/lifeeka/born/blob/master/born");
-        
+        /** @var TaskInterface $task */
+        $taskClass = $mapper->tasks[$arguments['task']] ?? null;
+        if ($taskClass) {
+            $task = new $taskClass();
+            $taskService = new BornService();
+            $taskService->setTask($task);
+            $taskService->generate();
+        } else {
+            $this->error("Invalid Command");
+        }
+
+
+        $tags = file_get_contents("https://api.github.com/repos/lifeeka/born/tags");
+        dd($tags);
+
+//        return Storage::download("https://github.com/lifeeka/born/blob/master/born");
         #dd($options,$arguments);
     }
 
