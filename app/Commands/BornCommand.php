@@ -38,20 +38,22 @@ class BornCommand extends Command
         /** @var TaskInterface $task */
         $taskClass = $mapper->tasks[$arguments['task']] ?? null;
         if ($taskClass) {
-            $task = new $taskClass();
+            $task = new $taskClass($this);
             $taskService = new BornService();
             $taskService->setTask($task);
-            $taskService->generate();
+
+            $bar = $this->output->createProgressBar(100);
+            $bar->setProgressCharacter("\xF0\x9F\x9A\x83");
+
+            $taskService->generate(function ($data) use ($bar) {
+                $bar->setFormat('<fg=blue>%current%%</> [<fg=blue>%bar%</>] <fg=cyan>' . $data['received'].'/'.$data['total'] . '</>');
+                $bar->advance($data['present'] - $bar->getProgress());
+            });
+            $bar->finish();  
+            
         } else {
             $this->error("Invalid Command");
         }
-
-
-        $tags = file_get_contents("https://api.github.com/repos/lifeeka/born/tags");
-        dd($tags);
-
-//        return Storage::download("https://github.com/lifeeka/born/blob/master/born");
-        #dd($options,$arguments);
     }
 
     /**

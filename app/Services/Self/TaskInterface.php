@@ -6,5 +6,5 @@ namespace App\Services\Self;
 
 interface TaskInterface
 {
-    public function generate();
+    public function generate($callback);
 }
