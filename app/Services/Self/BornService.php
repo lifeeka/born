@@ -19,12 +19,8 @@ class BornService
         $this->task = $task;
     }
 
-    public function generate($callback = "")
+    public function generate()
     {
-        $this->task->generate(function ($val) use ($callback) {
-            if (is_callable($callback)) {
-                $callback($val);
-            }
-        });
+        $this->task->generate();
     }
 }

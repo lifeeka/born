@@ -3,6 +3,7 @@
 
 namespace App\Services\Self;
 
+use Illuminate\Console\OutputStyle;
 use LaravelZero\Framework\Commands\Command;
 use Symfony\Component\Process\Process;
 
@@ -12,6 +13,10 @@ abstract class BaseTask
      * @var Command
      */
     protected $command;
+    /**
+     * @var OutputStyle
+     */
+    protected $outputStyle;
 
     public function __construct(Command $command)
     {
@@ -60,5 +65,9 @@ abstract class BaseTask
                 $callback($returnData);
             }
         });
+    }
+    
+    public function setOutputStyle(OutputStyle $outputStyle){
+        $this->outputStyle = $outputStyle;
     }
 }

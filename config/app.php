@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => 'Born',
+        'name' => 'Born',
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'version' => '0.0.4-beta',
+        'version' => '0.0.19-beta',
 
     /*
     |--------------------------------------------------------------------------
@@ -40,7 +40,7 @@ return [
     |
     */
 
-    'env' => 'production',
+        'env' => 'dev',
 
     /*
     |--------------------------------------------------------------------------
@@ -53,8 +53,11 @@ return [
     |
     */
 
-    'providers' => [
-        App\Providers\AppServiceProvider::class,
-    ],
+        'providers' => [
+                App\Providers\AppServiceProvider::class,
+        ],
+        'aliases'   => [ 
+        ],
+
 
 ];

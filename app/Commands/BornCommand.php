@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Services\Self\BaseTask;
 use App\Services\Self\BornService;
 use App\Services\Self\TaskInterface;
 use App\Services\Self\TaskMapper;
@@ -35,22 +36,15 @@ class BornCommand extends Command
         $arguments = $this->arguments();
         $options = $this->options();
 
-        /** @var TaskInterface $task */
+        /** @var TaskInterface|BaseTask $task */
         $taskClass = $mapper->tasks[$arguments['task']] ?? null;
         if ($taskClass) {
             $task = new $taskClass($this);
+            $task->setOutputStyle($this->output);
             $taskService = new BornService();
             $taskService->setTask($task);
-
-            $bar = $this->output->createProgressBar(100);
-            $bar->setProgressCharacter("\xF0\x9F\x9A\x83");
-
-            $taskService->generate(function ($data) use ($bar) {
-                $bar->setFormat('<fg=blue>%current%%</> [<fg=blue>%bar%</>] <fg=cyan>' . $data['received'].'/'.$data['total'] . '</>');
-                $bar->advance($data['present'] - $bar->getProgress());
-            });
-            $bar->finish();  
             
+            $taskService->generate();
         } else {
             $this->error("Invalid Command");
         }

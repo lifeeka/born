@@ -23,14 +23,16 @@
   ],
   "require": {
     "php": "^7.2.5",
-    "laravel-zero/framework": "^7.0",
-    "symfony/yaml": "^5.0",
     "ext-curl": "*",
-    "ext-json": "*"
+    "ext-json": "*",
+    "laminas/laminas-text": "^2.7",
+    "laravel-zero/framework": "^7.0",
+    "symfony/yaml": "^5.0"
   },
   "require-dev": {
     "clue/phar-composer": "^1.1",
     "kint-php/kint": "1.0",
+    "larapack/config-writer": "1.*",
     "mockery/mockery": "^1.3.1",
     "phpunit/phpunit": "^8.5"
   },

@@ -8,5 +8,6 @@ class TaskMapper
 {
     public $tasks = [
             "update" => UpdateTask::class,
+            "build" => BuildTask::class
     ];
 }
