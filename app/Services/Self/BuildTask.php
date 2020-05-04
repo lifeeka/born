@@ -13,9 +13,17 @@ class BuildTask extends BaseTask implements TaskInterface
 {
     private $newVersion;
     private $composer;
+    /**
+     * @var false|float
+     */
+    private $fileSize;
 
     public function generate($name = "born.phar")
     {
+        $this->commit();
+
+        dd();
+        
         $this->setVariables();
 
         $this->command->line("<fg=blue>Building the archive...</>");
@@ -30,9 +38,13 @@ class BuildTask extends BaseTask implements TaskInterface
         $phar->buildFromDirectory('../born-php', '/^((?!\.born|.idea|.git|tests).)*$/');
         $phar->setStub($defaultStub);
         $phar->stopBuffering();
-        $phar->compressFiles(Phar::GZ); 
+        $phar->compressFiles(Phar::GZ);
         chmod($name, 0770);
-        $this->command->info("\nArchive has been build: " . round(File::size($name) / 1048576, 2) . 'Mb');
+
+        $this->fileSize = round(File::size($name) / 1048576, 2) . 'Mb';
+        $this->commit();
+
+        $this->command->info("\nArchive has been build: " . $this->fileSize);
         $this->resetVariables();
     }
 
@@ -80,7 +92,7 @@ class BuildTask extends BaseTask implements TaskInterface
         $this->command->line("\t<fg=green>Dev packages has been install!</>");
     }
 
-    public function generateVersionNumber($code = 'beta')
+    private function generateVersionNumber($code = 'beta')
     {
         $currentVersion = config('app.version');
         $data = explode(".", $currentVersion);
@@ -88,5 +100,15 @@ class BuildTask extends BaseTask implements TaskInterface
         $lastNumber = ((int)$data[2]) + 1;
 
         return $data[0] . '.' . $data[1] . '.' . $lastNumber . '-' . $code;
+    }
+
+    private function commit()
+    {
+        $message = $this->newVersion . " has been build. size: " . $this->fileSize;
+        $process = Process::fromShellCommandline('git add . && git commit -m "' . $message . '"');
+        $process->run(function ($d,$f){
+            dd($d,$f);
+        });
+        $this->command->info("Git commit has been made!");
     }
 }
