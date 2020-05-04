@@ -38,9 +38,9 @@ class BuildTask extends BaseTask implements TaskInterface
         chmod($name, 0770);
 
         $this->fileSize = round(File::size($name) / 1048576, 2) . 'Mb';
+        $this->command->info("\nArchive has been build: " . $this->fileSize);
         $this->commit();
 
-        $this->command->info("\nArchive has been build: " . $this->fileSize);
         $this->resetVariables();
     }
 
