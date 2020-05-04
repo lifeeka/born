@@ -39,10 +39,8 @@ class UpdateTask extends BaseTask implements TaskInterface
      */
     private function update($callback = "")
     {
-        echo base_path('born.phar');
-            
         $this->download("https://raw.githubusercontent.com/lifeeka/born/master/born.phar",
-                base_path('born.phar'),
+                base_path(),
                 function ($val) use ($callback) {
                     if (is_callable($callback)) {
                         $callback($val);
