@@ -106,9 +106,7 @@ class BuildTask extends BaseTask implements TaskInterface
     {
         $message = $this->newVersion . " has been build. size: " . $this->fileSize;
         $process = Process::fromShellCommandline('git add . && git commit -m "' . $message . '"');
-        $process->run(function ($d,$f){
-            dd($d,$f);
-        });
+        $process->run();
         $this->command->info("Git commit has been made!");
     }
 }
