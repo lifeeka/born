@@ -20,10 +20,6 @@ class BuildTask extends BaseTask implements TaskInterface
 
     public function generate($name = "born.phar")
     {
-        $this->commit();
-
-        dd();
-        
         $this->setVariables();
 
         $this->command->line("<fg=blue>Building the archive...</>");
