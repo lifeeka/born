@@ -47,27 +47,28 @@ abstract class BaseTask
     public function download($url, $destination, $callback = "")
     {
         $process = Process::fromShellCommandline("curl -o $destination $url");
-        $process->setTimeout(60000000); 
+        $process->setTimeout(60000000);
 
         $process->run(function ($type, $buffer) use ($callback) {
             $bufferArray = preg_split("/\s+/", $buffer);
- 
+
             if (!is_numeric($bufferArray[1])) {
                 return;
-            } 
-              
-            $returnData['present'] = $bufferArray[1];
-            $returnData['total'] = $bufferArray[2];
-            $returnData['received'] = $bufferArray[4];
-            $returnData['speed'] = $bufferArray[7]; 
+            }
+
+            $returnData['present'] = $bufferArray[1] ?? 'n/a';
+            $returnData['total'] = $bufferArray[2] ?? 'n/a';
+            $returnData['received'] = $bufferArray[4] ?? 'n/a';
+            $returnData['speed'] = $bufferArray[7] ?? 'n/a';
 
             if (is_callable($callback)) {
                 $callback($returnData);
             }
         });
     }
-    
-    public function setOutputStyle(OutputStyle $outputStyle){
+
+    public function setOutputStyle(OutputStyle $outputStyle)
+    {
         $this->outputStyle = $outputStyle;
     }
 }
