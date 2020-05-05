@@ -52,9 +52,9 @@ abstract class BaseTask
         $process->run(function ($type, $buffer) use ($callback) {
             $bufferArray = preg_split("/\s+/", $buffer);
 
-            if (!is_numeric($bufferArray[1])) {
+            if (!is_numeric($bufferArray[1] ?? null)) {
                 return;
-            } 
+            }
             $returnData['present'] = $bufferArray[1] ?? 'n/a';
             $returnData['total'] = $bufferArray[2] ?? 'n/a';
             $returnData['received'] = $bufferArray[4] ?? 'n/a';

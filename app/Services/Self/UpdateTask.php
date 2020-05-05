@@ -39,8 +39,7 @@ class UpdateTask extends BaseTask implements TaskInterface
      * @param  string  $callback
      */
     private function update($callback = "")
-    {         
-        echo \Phar::running(false);
+    {
         $this->download("https://raw.githubusercontent.com/lifeeka/born/master/born.phar",
                 \Phar::running(false),
                 function ($val) use ($callback) {
