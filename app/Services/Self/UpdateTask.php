@@ -28,9 +28,9 @@ class UpdateTask extends BaseTask implements TaskInterface
                 });
                 $bar->finish();
 
-                $this->command->line("\n<info>Successfully Updated to $currentVersion!</info>");
+                $this->command->line("\n<info>Successfully Updated to $newVersion!</info>");
             } else {
-                $this->command->line("<fg=green>You are up to date 🙂</>");
+                $this->command->line("<fg=green>You are up to date</>");
             }
         }
     }
