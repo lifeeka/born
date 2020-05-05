@@ -4,15 +4,11 @@ namespace App\Commands;
 
 use App\Services\Commands\CommandMapper;
 use App\Services\Commands\ConsoleCommandInterface;
-use App\Services\ContainerRegister;
-use App\Services\DockerFile\DockerImageInterface;
-use App\Services\Environment;
 use App\Services\Service;
 use Docker\API\Client;
 use Docker\API\Model\ContainersCreatePostBody;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
-use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
 
 class ManageServiceCommand extends Command
 {
@@ -43,7 +39,6 @@ class ManageServiceCommand extends Command
         $options = $this->options();
         $command = $arguments['task'];
         
-
         if (isset($mapper->commands[$command])) {
             /** @var ConsoleCommandInterface $commandClass */
             $commandClass = new $mapper->commands[$command]($this);

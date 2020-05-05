@@ -6,6 +6,7 @@ namespace App\Services\Commands;
 
 use App\Services\Config;
 use LaravelZero\Framework\Commands\Command;
+use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 
 abstract class BaseCommand
@@ -58,6 +59,9 @@ abstract class BaseCommand
 
         $process = Process::fromShellCommandline($dockerCommand, $this->configFolderPath);
         $process->setTimeout(60000000);
+        try {
+            $process->setTty(true);
+        } catch (\RuntimeException $exception){}
 
         if ($output) {
             $process->run(function ($type, $buffer) {
