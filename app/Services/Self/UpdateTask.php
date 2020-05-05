@@ -8,7 +8,6 @@ class UpdateTask extends BaseTask implements TaskInterface
 {
     public function generate()
     {
-        dd(\Phar::running(false));
         $this->command->info("Checking for new versions...");
         $tags = $this->request("https://api.github.com/repos/lifeeka/born/tags");
         if ($tags) {

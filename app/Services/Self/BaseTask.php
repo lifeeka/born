@@ -55,6 +55,8 @@ abstract class BaseTask
             if (!is_numeric($bufferArray[1])) {
                 return;
             }
+            
+            print_r($bufferArray);
 
             $returnData['present'] = $bufferArray[1] ?? 'n/a';
             $returnData['total'] = $bufferArray[2] ?? 'n/a';
