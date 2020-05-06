@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Services\Commands\BaseCommand;
 use App\Services\Commands\CommandMapper;
 use App\Services\Commands\ConsoleCommandInterface;
 use App\Services\Service;
@@ -40,9 +41,10 @@ class ManageServiceCommand extends Command
         $command = $arguments['task'];
         
         if (isset($mapper->commands[$command])) {
-            /** @var ConsoleCommandInterface $commandClass */
+            /** @var ConsoleCommandInterface|BaseCommand $commandClass */
             $commandClass = new $mapper->commands[$command]($this);
             $commandClass->setConfigFolderPath($service->getConfigFolderPath());
+            $commandClass->setDockerComposerFileName($service->getDockerComposerFileName());
             $commandClass->execute();
         } else {
             $this->warn('Invalid command!');

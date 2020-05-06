@@ -6,13 +6,13 @@ namespace App\Services\Commands;
 
 use App\Services\Config;
 use LaravelZero\Framework\Commands\Command;
-use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 
 abstract class BaseCommand
 {
     protected $configFolderPath;
     protected $dockerApplication = 'docker-compose';
+    protected $dockerComposerFileName = "docker-compose.yml";
     protected $configFile = 'config.yml';
     protected $networks;
     /**
@@ -23,6 +23,10 @@ abstract class BaseCommand
      * @var array
      */
     protected $services;
+    /**
+     * @var string|string[]
+     */
+    protected $dockerCommandFormatted;
 
     public function __construct(Command $command)
     {
@@ -41,27 +45,46 @@ abstract class BaseCommand
         return $this;
     }
 
+    /**
+     * @param  string  $dockerComposerFileName
+     *
+     * @return BaseCommand
+     */
+    public function setDockerComposerFileName(string $dockerComposerFileName): BaseCommand
+    {
+        $this->dockerComposerFileName = $dockerComposerFileName;
+
+        return $this;
+    }
+
     public function runCommand($command, $output = true)
     {
         $config = new Config();
         $config->load($this->configFolderPath . '/' . $this->configFile);
 
         if ($this->dockerApplication == 'docker-compose') {
-            $dockerCommand = "$this->dockerApplication -p {$config->getProjectName()} $command";
+            $dockerCommand = "$this->dockerApplication 
+            -p {$config->getProjectName()}
+            -f \"{$this->configFolderPath}/{$this->dockerComposerFileName}\"
+            --env-file=\"{$this->configFolderPath}/.env\"
+            $command";
         } else {
             $dockerCommand = "$this->dockerApplication $command";
         }
+
+        $this->dockerCommandFormatted = trim(preg_replace('/\s\s+/', ' ', $dockerCommand));;
+
         if ($output) {
             $this->command->info("NAME: " . $config->getProjectName());
-            $this->command->info("COMMAND: " . $dockerCommand);
-            $this->command->info("FOLDER: " . $this->configFolderPath);
+            $this->command->info("COMMAND: " . str_replace("\r", " \\", $dockerCommand));
         }
 
-        $process = Process::fromShellCommandline($dockerCommand, $this->configFolderPath);
+        $process = Process::fromShellCommandline($dockerCommand);
         $process->setTimeout(60000000);
         try {
             $process->setTty(true);
-        } catch (\RuntimeException $exception){}
+        } catch (\RuntimeException $exception) {
+        }
 
         if ($output) {
             $process->run(function ($type, $buffer) {

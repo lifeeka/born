@@ -11,5 +11,6 @@ class CommandMapper
     public $commands = [
             'cm' => DockerComposeCommand::class,
             'net' => NetworkCommand::class,
+            'login' => ContainerLoginCommand::class,
     ];
 }

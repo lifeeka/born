@@ -13,6 +13,7 @@ class Service
     private $projectFolder;
     private $bornFolder = ".born";
     private $configFilename = "config.yml";
+    private $dockerComposerFileName = "docker-compose.yml";
     private $projectExist;
     private $serviceName;
     private $containers = [];
@@ -116,4 +117,26 @@ class Service
             $container->save();
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getDockerComposerFileName(): string
+    {
+        return $this->dockerComposerFileName;
+    }
+
+    /**
+     * @param  string  $dockerComposerFileName
+     *
+     * @return Service
+     */
+    public function setDockerComposerFileName(string $dockerComposerFileName): Service
+    {
+        $this->dockerComposerFileName = $dockerComposerFileName;
+
+        return $this;
+    }
+    
+    
 }
