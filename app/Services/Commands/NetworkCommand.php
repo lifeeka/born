@@ -36,7 +36,7 @@ class NetworkCommand extends BaseCommand implements ConsoleCommandInterface
                 $selectedNetwork = $this->command->choice('What is the network',
                         array_column($this->networks, 1), 0);
 
-                if (array_search('All', (array)$selectedServices) !== false) { 
+                if (array_search('All', (array)$selectedServices) !== false) {
                     $selectedServices = $this->services;
                 }
 
@@ -51,8 +51,9 @@ class NetworkCommand extends BaseCommand implements ConsoleCommandInterface
                 break;
             case 'create':
 
-                $name = $this->command->anticipate('Network Name', array_column($this->networks, 1));
+                $name = $this->command->ask('Network Name');
                 $this->dockerApplication = 'docker';
+
                 $output = $this->runCommand("network create $name", false);
                 $this->command->info("Network ID:" . $output);
                 break;
