@@ -1,6 +1,7 @@
 <?php
 
 use App\Commands\DefaultCommand;
+use NunoMaduro\LaravelConsoleSummary\SummaryCommand;
 
 return [
 
@@ -15,7 +16,7 @@ return [
     |
     */
 
-    'default' => DefaultCommand::class,
+    'default' => SummaryCommand::class,
 
     /*
     |--------------------------------------------------------------------------
