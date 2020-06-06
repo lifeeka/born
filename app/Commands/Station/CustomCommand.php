@@ -12,7 +12,7 @@ class CustomCommand extends Command
 {
     use BaseCommand;
 
-    protected $signature = 'station {cmd?}';
+    protected $signature = 'station cm {cmd?}';
     protected $description = 'Custom station command';
 
     /**
