@@ -24,9 +24,6 @@ class CustomCommand extends Command
         if (empty($arguments['cmd'])) {
             throw new BornCommandMissingException("Command is missing. <fg=blue>{$this->signature}", $this);
         }
-
-        dd($arguments );
-
         $this->mapCommand($arguments['cmd']);
     }
 }
