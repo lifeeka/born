@@ -11,7 +11,7 @@ use LaravelZero\Framework\Commands\Command;
 class ListCommand extends Command
 {
     use BaseCommand;
-    protected $signature = 'station {ps}';
+    protected $signature = 'station ps';
     protected $description = 'List all services';
 
     /**
