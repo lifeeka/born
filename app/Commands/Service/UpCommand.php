@@ -11,7 +11,7 @@ use LaravelZero\Framework\Commands\Command;
 class UpCommand extends Command
 {
     use BaseCommand;
-    protected $signature = 'up  {--d|background} {--force-recreate} {service?}';
+    protected $signature = 'up  {--d|background} {--f|force} {service?}';
     protected $description = 'Up a service';
 
     /**
@@ -23,7 +23,7 @@ class UpCommand extends Command
         $options = $this->options();
 
         $optionsCommand = $options['background'] ? "-d" : "";
-        $optionsCommand .= $options['force-recreate'] ? " --force-recreate" : "";
+        $optionsCommand .= $options['force'] ? " --force-recreate" : "";
 
         $this->executeCommand("up $optionsCommand {$arguments['service']}");
     }
