@@ -12,7 +12,7 @@ class CustomCommand extends Command
 {
     use BaseCommand;
 
-    protected $signature = 'station cm {cmd?}';
+    protected $signature = 'station {cmd?}';
     protected $description = 'Custom station command';
 
     /**
@@ -24,6 +24,8 @@ class CustomCommand extends Command
         if (empty($arguments['cmd'])) {
             throw new BornCommandMissingException("Command is missing. <fg=blue>{$this->signature}", $this);
         }
+
+        dd($arguments );
 
         $this->mapCommand($arguments['cmd']);
     }
