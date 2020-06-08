@@ -94,11 +94,10 @@ trait BaseCommand
             $this->info("COMMAND: " . str_replace("\r", " \\", $this->dockerCommandFormatted));
         }
 
-        $process = Process::fromShellCommandline($dockerCommand);
+        $process = Process::fromShellCommandline($this->dockerCommandFormatted);
         $process->setTimeout(60000000);
-        try {
+        if (Process::isTtySupported()) {
             $process->setTty(true);
-        } catch (\RuntimeException $exception) {
         }
 
         if ($output) {
