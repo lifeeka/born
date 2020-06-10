@@ -26,6 +26,5 @@ class LoginCommand extends Command
         }
 
         $this->executeCommand("exec {$arguments['service']} {$arguments['application']}");
-        shell_exec("echo {$this->dockerCommandFormatted} | clip");
     }
 }

@@ -43,7 +43,7 @@ trait BaseCommand
         $this->projectExist = File::exists($this->configFolderPath . '/' . $this->configFilename);
         $this->environment = $environment;
         $this->config = $config;
-        $this->workingDirectory = "E:\projects\lifeeka\services";
+        $this->workingDirectory = $this->projectFolder;
 
         parent::__construct();
     }
