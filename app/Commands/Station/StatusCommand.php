@@ -20,11 +20,7 @@ class StatusCommand extends Command
      */
     public function handle()
     {
-        $arguments = $this->arguments();
         $options = $this->options();
-        if (empty($arguments['cmd'])) {
-            throw new BornCommandMissingException("Command is missing. <fg=blue>{$this->signature}", $this);
-        }
         $this->mapCommand("ps", $options['details'] ?? false);
     }
 }

@@ -20,15 +20,11 @@ class UpCommand extends Command
      */
     public function handle()
     {
-        $arguments = $this->arguments();
         $options = $this->options();
 
         $optionsCommand = $options['background'] ? "-d" : "";
         $optionsCommand .= $options['force'] ? " --force-recreate" : "";
 
-        if (empty($arguments['cmd'])) {
-            throw new BornCommandMissingException("Command is missing. <fg=blue>{$this->signature}", $this);
-        }
         $this->mapCommand("up $optionsCommand", $options['details'] ?? false);
     }
 }
