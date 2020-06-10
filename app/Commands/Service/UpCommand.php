@@ -11,7 +11,7 @@ use LaravelZero\Framework\Commands\Command;
 class UpCommand extends Command
 {
     use BaseCommand;
-    protected $signature = 'up  {--d|background} {--f|force} {service?}';
+    protected $signature = 'up {--d|background} {--f|force} {service?}';
     protected $description = 'Up a service';
 
     /**
