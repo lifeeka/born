@@ -4,6 +4,7 @@
 namespace App\Commands\Self;
 
 
+use App\Exceptions\BornCommandMissingException;
 use App\Services\BaseCommand;
 use LaravelZero\Framework\Commands\Command;
 
@@ -29,16 +30,20 @@ class UpdateCommand extends Command
                 $this->line("<fg=blue>Updating...</>");
 
                 $bar = $this->output->createProgressBar(100);
-                $bar->setProgressCharacter("\xF0\x9F\x9A\x83");
+                $bar->setProgressCharacter("||");
 
 
+                try{
                 $this->download("https://raw.githubusercontent.com/lifeeka/born/master/born.phar",
                         \Phar::running(false),
                         function ($data) use ($bar) {
                             $bar->setFormat('<fg=blue>%current%%</> [<fg=blue>%bar%</>] <fg=cyan>' . $data['received'] . '/' . $data['total'] . '</>');
                             $bar->advance($data['present'] - $bar->getProgress());
                         });
-
+                }
+                catch (\Exception $exception){
+                    $this->line("Something went wrong: <fg=red>{$exception->getMessage()}");
+                }
 
                 $bar->finish();
 
