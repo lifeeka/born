@@ -31,8 +31,6 @@ class UpdateCommand extends Command
                 $bar = $this->output->createProgressBar(100);
                 $bar->setProgressCharacter("||");
 
-
-                unlink(\Phar::running(false));
                 $this->download("https://raw.githubusercontent.com/lifeeka/born/master/born.phar",
                         \Phar::running(false),
                         function ($data) use ($bar) {
