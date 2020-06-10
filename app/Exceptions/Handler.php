@@ -27,13 +27,11 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
-
         if(is_subclass_of($exception,BornException::class)){
             /** @var BornException $exception */
             $exception->getCommand()->line("<fg=red>{$exception->getMessage()}</>");
             die();
         }
-
 
         parent::report($exception);
     }

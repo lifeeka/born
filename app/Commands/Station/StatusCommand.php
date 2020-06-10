@@ -12,7 +12,7 @@ class StatusCommand extends Command
 {
     use BaseCommand;
 
-    protected $signature = 'station status {--vv|details}';
+    protected $signature = 'station status {--g|details}';
     protected $description = 'Custom station command';
 
     /**
