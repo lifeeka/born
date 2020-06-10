@@ -31,12 +31,13 @@ trait BaseStationCommand
 
     /**
      * @param $command
+     * @param  bool  $output
      */
-    public function mapCommand($command)
+    public function mapCommand($command, $output = true)
     {
-        $this->map(function ($configFolderPath) use ($command) {
+        $this->map(function ($configFolderPath) use ($command, $output) {
             $this->setConfigFolderPath($configFolderPath);
-            $this->executeCommand($command);
+            $this->executeCommand($command, $output);
         });
     }
 
