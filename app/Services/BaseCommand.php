@@ -100,12 +100,16 @@ trait BaseCommand
             $process->setTty(true);
         }
 
-        if ($output) {
-            $process->run(function ($type, $buffer) {
-                $this->line("<fg=cyan;>$buffer</>");
-            });
-        } else {
-            $process->run();
+        try {
+            if ($output) {
+                $process->run(function ($type, $buffer) {
+                    $this->line("<fg=cyan;>$buffer</>");
+                });
+            } else {
+                $process->run();
+            }
+        } catch (\Exception $exception) {
+            $this->line("<fg=red;>{$exception->getMessage()}</>");
         }
 
         return $process->getOutput();
